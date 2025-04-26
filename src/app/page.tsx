@@ -9,9 +9,15 @@ const WeatherCard = dynamic(() => import('@/components/WeatherCard'), { ssr: fal
 
 export default function Home() {
   const [city, setCity] = useState('');
-  const [weather, setWeather] = useState<any>(null);
+  const [weather, setWeather] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  interface WeatherData {
+    name: string;
+    main: { temp: number };
+    weather: { description: string; icon: string }[];
+  }
 
   const fetchWeather = async () => {
     if (!city.trim()) {
@@ -30,7 +36,7 @@ export default function Home() {
       } else {
         setWeather(data);
       }
-    } catch (err) {
+    } catch {
       setError('Something went wrong. Please try again.');
     } finally {
       setLoading(false);

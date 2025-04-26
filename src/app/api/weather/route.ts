@@ -12,7 +12,9 @@ export async function GET(req: NextRequest) {
     try {
         const data = await getWeather(city);
         return NextResponse.json(data);
-    } catch (error) {
-        return NextResponse.json({ error: "Failed to fetch weather" }, { status: 500 });
+    } catch {
+        return new Response(JSON.stringify({ error: "Failed to fetch weather data" }), { status: 500 });
     }
+
 }
+
